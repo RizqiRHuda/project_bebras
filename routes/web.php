@@ -11,5 +11,18 @@ Route::prefix('tentangBebras')->name('tentangBebras.')->group(function () {
     Route::view('/dd_3', 'pages.tentangBebras.dd_3')->name('dd_3');
     Route::view('/dd_4', 'pages.tentangBebras.dd_4')->name('dd_4');
     Route::view('/dd_5', 'pages.tentangBebras.dd_5')->name('dd_5');
-       Route::view('/dd_6', 'pages.tentangBebras.dd_6')->name('dd_6');
+    Route::view('/dd_6', 'pages.tentangBebras.dd_6')->name('dd_6');
 });
+
+Route::prefix('soal')->name('soal.')->group(function () {
+    Route::view('/index-soal', 'pages.soal.index_soal')->name('index-soal');
+      Route::view('/pembahasan-soal', 'pages.soal.pembahasan_soal')->name('pembahasan-soal');
+});
+
+Route::get('/latihan', function () {
+    return view('pages.latihan.index');
+})->name('latihan');
+
+Route::get('/kontak', function () {
+    return view('pages.kontak.index');
+})->name('kontak');

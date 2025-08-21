@@ -48,16 +48,87 @@
                                 <li><a href="{{ route('tentangBebras.dd_5') }}"
                                         class="nav-link block px-4 py-2 text-gray-800 hover:bg-gray-100 {{ request()->routeIs('tentangBebras.dd_5') ? 'active' : '' }}">Kegiatan
                                         Bebras</a></li>
-                                 <li><a href="{{ route('tentangBebras.dd_6') }}"
+                                <li><a href="{{ route('tentangBebras.dd_6') }}"
                                         class="nav-link block px-4 py-2 text-gray-800 hover:bg-gray-100 {{ request()->routeIs('tentangBebras.dd_6') ? 'active' : '' }}">Sejarah
                                         Bebras Indonesia</a></li>
                             </ul>
                         </div>
                     </div>
-                    <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Soal</a>
+
+                    <div class="relative inline-block dropdown">
+                        <!-- Parent -->
+                        <button
+                            class="dropdown-btn nav-link text-white px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer hover:bg-bebrasDarkBlue transition">
+                            Soal
+                            <svg class="w-4 h-4 ml-1 transform transition duration-200" fill="none"
+                                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div
+                            class="dropdown-menu absolute left-0 hidden bg-white text-black mt-2 rounded-md shadow-lg w-48 z-50">
+                            <ul class="py-2 text-sm">
+                                <li>
+                                    <a href="{{ route('soal.index-soal') }}"
+                                        class="nav-link block px-4 py-2 text-gray-800 hover:bg-gray-100 {{ request()->routeIs('soal.index-soal') ? 'active' : '' }}">
+                                        Apa itu Soal Bebras?
+                                    </a>
+                                </li>
+                                <li class="relative group">
+                                    <!-- Parent -->
+                                    <div
+                                        class="nav-link  px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center cursor-pointer">
+                                        Contoh Soal
+                                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- Dropdown -->
+                                    <ul
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
+                                        <li>
+                                            <a href=""
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
+                                                Soal 1
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href=""
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
+                                                Soal 2
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href=""
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
+                                                Soal 3
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ route('soal.pembahasan-soal') }}"
+                                        class="nav-link block px-4 py-2 text-gray-800 hover:bg-gray-100 {{ request()->routeIs('soal.pembahasan-soal') ? 'active' : '' }}">
+                                        Pembahasan Soal
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Kegiatan</a>
-                    <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Latihan</a>
-                    <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
+                    <a href="{{ route('latihan') }}"
+                        class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('latihan') ? 'active' : '' }}">
+                        Latihan
+                    </a>
+                       <a href="{{ route('kontak') }}"
+                        class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('kontak') ? 'active' : '' }}">
+                        Kontak
+                    </a>
                 </div>
             </div>
 
@@ -87,7 +158,7 @@
     <div class="md:hidden hidden bg-bebrasDarkBlue shadow-lg" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="{{ route('home') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-            <div class="relative inline-block dropdown group">
+            <div class="relative block dropdown group">
                 <!-- Parent -->
                 <button
                     class="dropdown-btn nav-link text-white px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer hover:bg-bebrasDarkBlue transition">
@@ -100,7 +171,7 @@
 
                 <!-- Dropdown -->
                 <div
-                    class="dropdown-menu absolute left-0 hidden group-hover:block bg-white text-black mt-2 rounded-md shadow-lg w-48 z-50">
+                    class="dropdown-menu absolute left-0 hidden bg-white text-black mt-2 rounded-md shadow-lg w-48 z-50">
                     <ul class="py-2 text-sm">
                         <li>
                             <a href="{{ route('tentangBebras.dd_1') }}"
@@ -128,11 +199,66 @@
                 </div>
             </div>
 
-            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium">Soal</a>
-            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium">Kegiatan</a>
-            <a href="#" class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium">Latihan</a>
-            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
+            <div class="relative block dropdown">
+                <!-- Parent -->
+                <button id="dropdownSoalBtn"
+                    class="dropdown-btn nav-link text-white px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer hover:bg-bebrasDarkBlue transition">
+                    Soal
+                    <svg class="w-4 h-4 ml-1 transition-transform duration-200" id="dropdownSoalIcon" fill="none"
+                        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
 
+                <!-- Dropdown utama -->
+                <div id="dropdownSoalMenu"
+                    class="absolute left-0 hidden bg-white text-black mt-2 rounded-md shadow-lg w-48 z-50">
+                    <ul class="py-2 text-sm">
+                        <li>
+                            <a href="{{ route('soal.index-soal') }}"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-100 {{ request()->routeIs('soal.index-soal') ? 'active' : '' }}">
+                                Apa itu Soal Bebras?
+                            </a>
+                        </li>
+
+                        <!-- Nested -->
+                        <li class="relative">
+                            <button id="dropdownContohBtn"
+                                class="flex items-center justify-between w-full px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                Contoh Soal
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <!-- Submenu -->
+                            <ul id="dropdownContohMenu"
+                                class="absolute top-0 left-full ml-1 hidden bg-white shadow-lg rounded-md w-40 z-50">
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
+                                        1</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
+                                        2</a></li>
+                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
+                                        2</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('soal.pembahasan-soal') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                Pembahasan Soal
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            {{-- <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium">Soal</a> --}}
+            <a href="#" class="text-white block px-3 py-2 rounded-md text-base font-medium">Kegiatan</a>
+            <a href="{{ route('latihan') }}"
+                class="text-white block px-3 py-2 rounded-md text-base font-medium">Latihan</a>
+            <a href="{{ route('kontak') }}"
+                class="text-white block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
             <div class="relative mt-4 px-3">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-search text-gray-400 ms-2"></i>
