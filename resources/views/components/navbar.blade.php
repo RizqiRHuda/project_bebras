@@ -91,21 +91,21 @@
                                     <ul
                                         class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
                                         <li>
-                                            <a href=""
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                Soal 1
+                                            <a href="{{ route('soal.siaga-sd') }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('soal.siaga-sd') ? 'active' : '' }}">
+                                                Siaga Siswa SD
                                             </a>
                                         </li>
                                         <li>
-                                            <a href=""
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                Soal 2
+                                            <a href="{{ route('soal.penggalang-smp') }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('soal.penggalang-smp') ? 'active' : '' }}">
+                                                Penggalang Siswa SMP
                                             </a>
                                         </li>
                                         <li>
-                                            <a href=""
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                Soal 3
+                                            <a href="{{ route('soal.penegak-sma') }}"
+                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('soal.penegak-sma') ? 'active' : '' }}">
+                                                Penegak Siswa SMA
                                             </a>
                                         </li>
                                     </ul>
@@ -125,7 +125,7 @@
                         class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('latihan') ? 'active' : '' }}">
                         Latihan
                     </a>
-                       <a href="{{ route('kontak') }}"
+                    <a href="{{ route('kontak') }}"
                         class="nav-link text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('kontak') ? 'active' : '' }}">
                         Kontak
                     </a>
@@ -235,17 +235,19 @@
                             <!-- Submenu -->
                             <ul id="dropdownContohMenu"
                                 class="absolute top-0 left-full ml-1 hidden bg-white shadow-lg rounded-md w-40 z-50">
-                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
-                                        1</a></li>
-                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
-                                        2</a></li>
-                                <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Soal
-                                        2</a></li>
+                                <li><a href="{{ route('soal.siaga-sd') }}"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Siaga Siswa SD</a></li>
+                                <li><a href="{{ route('soal.penggalang-smp') }}"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Penggalang
+                                        Siswa SMP</a></li>
+                                <li><a href="{{ route('soal.penegak-sma') }}"
+                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Penegak Siswa SMA</a></li>
                             </ul>
                         </li>
 
                         <li>
-                            <a href="{{ route('soal.pembahasan-soal') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                            <a href="{{ route('soal.pembahasan-soal') }}"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
                                 Pembahasan Soal
                             </a>
                         </li>

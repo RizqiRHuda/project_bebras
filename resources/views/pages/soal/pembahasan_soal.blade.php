@@ -45,18 +45,18 @@
                     </div>
                     <ul class="space-y-3 pl-2 text-lg">
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2019/10/Bebras-Challenge-2016_Siaga.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Siaga 2016</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Siaga 2016</a></li>
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2018/07/BukuBebras2017_SD.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Siaga 2017</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Siaga 2017</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2019/09/BukuBebras2018%20SD%20v.5%20rev-1.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Siaga 2018</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Siaga 2018</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2019-SD-v.Okt_.2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Siaga 2019</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Siaga 2019</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2020-SD-OK-Okt2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Siaga 2020</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Siaga 2020</a></li>
                     </ul>
                 </div>
 
@@ -70,17 +70,17 @@
                     <ul class="space-y-3 pl-2 text-lg">
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2019/10/Bebras-Challenge-2016_Penggalang.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penggalang 2016</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penggalang 2016</a></li>
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2018/07/BukuBebras2017_SMP.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penggalang 2017</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penggalang 2017</a></li>
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2019/09/BukuBebras2018%20SMP%20v.5.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penggalang 2018</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penggalang 2018</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2019-SMP-v.Okt_.2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penggalang 2019</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penggalang 2019</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2020-SMP-OK-Okt2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penggalang 2020</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penggalang 2020</a></li>
                     </ul>
                 </div>
 
@@ -94,17 +94,17 @@
                     <ul class="space-y-3 pl-2 text-lg">
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2019/10/Bebras-Challenge-2016_Penegak.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penegak 2016</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penegak 2016</a></li>
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2018/07/BukuBebras2017_SMA.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penegak 2017</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penegak 2017</a></li>
                         <li>📘 <a href="https://bebras.or.id/v3/wp-content/uploads/2019/09/BukuBebras2018%20SMA%20v.5.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penegak 2018</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penegak 2018</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2019-SMA-v.Okt_.2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penegak 2019</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penegak 2019</a></li>
                         <li>📘 <a
                                 href="https://bebras.or.id/v3/wp-content/uploads/2024/10/Bebras-Indonesia-Book-2020-SMA-OK-Okt2024.pdf"
-                                target="_blank" class="link-bebras">Buku Bebras Penegak 2020</a></li>
+                                target="_blank" class="link-bebras hover:underline hover:text-gray-600">Buku Bebras Penegak 2020</a></li>
                     </ul>
                 </div>
 

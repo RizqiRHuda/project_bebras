@@ -16,7 +16,10 @@ Route::prefix('tentangBebras')->name('tentangBebras.')->group(function () {
 
 Route::prefix('soal')->name('soal.')->group(function () {
     Route::view('/index-soal', 'pages.soal.index_soal')->name('index-soal');
-      Route::view('/pembahasan-soal', 'pages.soal.pembahasan_soal')->name('pembahasan-soal');
+    Route::view('/pembahasan-soal', 'pages.soal.pembahasan_soal')->name('pembahasan-soal');
+    Route::view('/siaga-sd', 'pages.soal.sd')->name('siaga-sd');
+    Route::view('/penggalang-smp', 'pages.soal.smp')->name('penggalang-smp');
+    Route::view('/penegak-sma', 'pages.soal.sma')->name('penegak-sma');
 });
 
 Route::get('/latihan', function () {
