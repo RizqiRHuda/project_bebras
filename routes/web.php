@@ -22,6 +22,10 @@ Route::prefix('soal')->name('soal.')->group(function () {
     Route::view('/penegak-sma', 'pages.soal.sma')->name('penegak-sma');
 });
 
+Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
+    Route::view('/workshop-2017', 'pages.kegiatan.workshop_2017')->name('workshop-2017');
+});
+
 Route::get('/latihan', function () {
     return view('pages.latihan.index');
 })->name('latihan');
