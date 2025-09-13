@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('tentangBebras')->name('tentangBebras.')->group(function () {
@@ -33,3 +36,5 @@ Route::get('/latihan', function () {
 Route::get('/kontak', function () {
     return view('pages.kontak.index');
 })->name('kontak');
+
+

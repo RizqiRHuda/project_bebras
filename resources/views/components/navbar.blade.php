@@ -294,9 +294,15 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-search text-gray-400"></i>
                     </div>
-                    <input type="text"
-                        class="block w-48 pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-white text-white placeholder-gray-200 focus:outline-none focus:bg-white focus:text-gray-900 focus:ring-0"
-                        placeholder="Cari...">
+                    <form action="{{ route('search') }}" method="GET">
+
+                        <input type="text" id="searchInput" name="search"
+                            class="block w-48 pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-white text-white placeholder-gray-200 focus:outline-none focus:bg-white focus:text-gray-900 focus:ring-0"
+                            autocomplete="off" placeholder="Cari...">
+                    </form>
+                    <ul id="suggestions"
+                        class="absolute z-10 bg-white border rounded-md mt-1 w-full hidden shadow-lg">
+                    </ul>
                 </div>
 
                 <div class="md:hidden">
@@ -313,3 +319,7 @@
     @include('components.navbar-mobile')
 
 </nav>
+
+@push('scripts')
+    @vite('resources/js/search.js')
+@endpush

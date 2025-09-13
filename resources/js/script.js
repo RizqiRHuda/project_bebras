@@ -1,26 +1,21 @@
-
-// Mobile menu toggle
-
-
-// Simple carousel
 document.addEventListener('DOMContentLoaded', function () {
     const carouselItems = document.querySelectorAll('[data-carousel-item]');
     const indicators = document.querySelectorAll('[data-carousel-slide-to]');
-    let currentIndex = 2;
+    let currentIndex = 0; // mulai dari slide pertama
 
     function showSlide(index) {
-        carouselItems.forEach(item => {
-            item.style.opacity = '0';
-            item.style.zIndex = '0';
+        carouselItems.forEach((item, i) => {
+            item.style.opacity = (i === index) ? '1' : '0';
+            item.style.zIndex = (i === index) ? '10' : '0';
         });
-        carouselItems[index].style.opacity = '1';
-        carouselItems[index].style.zIndex = '10';
 
         indicators.forEach((indicator, i) => {
             if (i === index) {
-                indicator.classList.replace('bg-opacity-50', 'bg-white');
+                indicator.classList.add('bg-white');
+                indicator.classList.remove('bg-white/50');
             } else {
-                indicator.classList.replace('bg-white', 'bg-opacity-50');
+                indicator.classList.add('bg-white/50');
+                indicator.classList.remove('bg-white');
             }
         });
 
@@ -50,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (newIndex >= carouselItems.length) newIndex = 0;
         showSlide(newIndex);
     }, 5000);
+
+    // tampilkan slide pertama saat load
+    showSlide(currentIndex);
 });
-
-

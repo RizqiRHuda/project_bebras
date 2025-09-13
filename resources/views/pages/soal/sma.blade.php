@@ -85,64 +85,71 @@
                             </li>
                         </ul>
                     </div>
-<div
-    class="mt-8 sm:mt-16 bg-gradient-to-br from-blue-50 to-green-50 p-4 sm:p-8 rounded-2xl shadow-xl space-y-5">
+                    <div
+                        class="mt-8 sm:mt-16 bg-gradient-to-br from-blue-50 to-green-50 p-4 sm:p-8 rounded-2xl shadow-xl space-y-5">
 
-    <!-- Judul Solusi -->
-    <h4 class="text-xl sm:text-2xl font-extrabold text-blue-900 mb-2 flex items-center gap-2">
-        ✅ Solusi
-    </h4>
+                        <!-- Judul Solusi -->
+                        <h4 class="text-xl sm:text-2xl font-extrabold text-blue-900 mb-2 flex items-center gap-2">
+                            ✅ Solusi
+                        </h4>
 
-    <!-- Sub Judul -->
-    <h5 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
-        💡 Ini Informatika
-    </h5>
+                        <!-- Sub Judul -->
+                        <h5 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
+                            💡 Ini Informatika
+                        </h5>
 
-    <!-- Jawaban -->
-    <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
-        <span class="font-semibold text-green-600">Jawaban yang benar adalah A.</span>
-        <br>
-        Gambar berikut menjelaskan eksekusi pelipatan tahap demi tahap:
-    </p>
+                        <!-- Jawaban -->
+                        <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
+                            <span class="font-semibold text-green-600">Jawaban yang benar adalah A.</span>
+                            <br>
+                            Gambar berikut menjelaskan eksekusi pelipatan tahap demi tahap:
+                        </p>
 
-    <!-- Gambar Solusi -->
-    <div class="flex justify-center">
-        <img src="{{ asset('img/sma_3.png') }}" alt="Tahap Pelipatan"
-            class="rounded-xl shadow-lg max-w-full sm:max-w-md bg-white p-1 sm:p-2">
-    </div>
+                        <!-- Gambar Solusi -->
+                        <div class="flex justify-center">
+                            <img src="{{ asset('img/sma_3.png') }}" alt="Tahap Pelipatan"
+                                class="rounded-xl shadow-lg max-w-full sm:max-w-md bg-white p-1 sm:p-2">
+                        </div>
 
-    <!-- Penjelasan Informatika -->
-    <div class="bg-white p-4 sm:p-6 rounded-xl shadow space-y-4">
-        <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
-            Soal ini berkaitan dengan <span class="font-semibold text-blue-700">informatika</span>,
-            yaitu konsep <span class="italic">fungsi</span> yang sangat penting dalam pemrograman.
-        </p>
+                        <!-- Penjelasan Informatika -->
+                        <div class="bg-white p-4 sm:p-6 rounded-xl shadow space-y-4">
+                            <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
+                                Soal ini berkaitan dengan <span class="font-semibold text-blue-700">informatika</span>,
+                                yaitu konsep <span class="italic">fungsi</span> yang sangat penting dalam pemrograman.
+                            </p>
 
-        <!-- List dengan styling -->
-        <ul class="space-y-3 sm:space-y-4 text-gray-700 text-sm sm:text-base">
-            <li class="flex items-start gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition">
-                <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
-                <span><span class="font-semibold">Fungsi</span> dipanggil melalui perintah → memulai serangkaian aktivitas.</span>
-            </li>
-            <li class="flex items-start gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
-                <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-green-600 text-white text-xs font-bold">2</span>
-                <span><span class="font-semibold">Parameter</span> (contoh: dua sisi kertas) → menjadi input fungsi.</span>
-            </li>
-            <li class="flex items-start gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
-                <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-purple-600 text-white text-xs font-bold">3</span>
-                <span><span class="font-semibold">Output</span> → hasil pemrosesan, yaitu bentuk lipatan.</span>
-            </li>
-        </ul>
+                            <!-- List dengan styling -->
+                            <ul class="space-y-3 sm:space-y-4 text-gray-700 text-sm sm:text-base">
+                                <li class="flex items-start gap-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition">
+                                    <span
+                                        class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-white text-xs font-bold">1</span>
+                                    <span><span class="font-semibold">Fungsi</span> dipanggil melalui perintah → memulai
+                                        serangkaian aktivitas.</span>
+                                </li>
+                                <li class="flex items-start gap-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition">
+                                    <span
+                                        class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-green-600 text-white text-xs font-bold">2</span>
+                                    <span><span class="font-semibold">Parameter</span> (contoh: dua sisi kertas) → menjadi
+                                        input fungsi.</span>
+                                </li>
+                                <li
+                                    class="flex items-start gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 transition">
+                                    <span
+                                        class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-purple-600 text-white text-xs font-bold">3</span>
+                                    <span><span class="font-semibold">Output</span> → hasil pemrosesan, yaitu bentuk
+                                        lipatan.</span>
+                                </li>
+                            </ul>
 
-        <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
-            Dengan demikian, siswa belajar bahwa fungsi dalam pemrograman bekerja seperti “mesin”:
-            menerima input, memproses, lalu menghasilkan output.
-        </p>
-    </div>
-</div>
+                            <p class="text-gray-800 leading-relaxed text-sm sm:text-base">
+                                Dengan demikian, siswa belajar bahwa fungsi dalam pemrograman bekerja seperti “mesin”:
+                                menerima input, memproses, lalu menghasilkan output.
+                            </p>
+                        </div>
+                    </div>
 
 
-                 
+
                 </div>
             </div>
         </div>
