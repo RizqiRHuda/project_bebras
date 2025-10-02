@@ -49,6 +49,8 @@
                         class="inline-block px-4 py-2 rounded-lg bg-bebrasBlue text-white font-medium hover:bg-blue-700 transition">
                         Kunjungi Latihan
                     </a>
+                    {{-- <img src="{{ asset('public/storage/latihan/bebras-1757678163.jpeg') }}" alt="gambar"> --}}
+                    {{-- <img src="{{ $latihan->gambar }}" alt=""> --}}
                 </div>
 
             </div>
