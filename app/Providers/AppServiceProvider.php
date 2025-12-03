@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Services\BebrasPengumumanService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Share pengumuman years to navbar
+        View::composer('components.navbar', function ($view) {
+            $pengumumanService = app(BebrasPengumumanService::class);
+            $years = $pengumumanService->getYears();
+            $view->with('pengumumanYears', $years);
+        });
     }
 }

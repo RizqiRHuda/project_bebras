@@ -89,7 +89,7 @@
 
                                     <!-- Dropdown -->
                                     <ul
-                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
                                         <li>
                                             <a href="{{ route('soal.siaga-sd') }}"
                                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('soal.siaga-sd') ? 'active' : '' }}">
@@ -148,7 +148,7 @@
 
                                     <!-- Dropdown -->
                                     <ul
-                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
                                         <li>
                                             <a href="{{ route('kegiatan.workshop-2017') }}"
                                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('kegiatan.workshop-2017') ? 'active' : '' }}">
@@ -178,7 +178,7 @@
 
                                     <!-- Dropdown -->
                                     <ul
-                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
                                         <li>
                                             <a href="#"
                                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
@@ -220,26 +220,23 @@
 
                                     <!-- Dropdown -->
                                     <ul
-                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
-                                        <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                2024
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                2023
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                2022
-                                            </a>
-                                        </li>
-
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
+                                        @if(!empty($pengumumanYears) && count($pengumumanYears) > 0)
+                                            @foreach($pengumumanYears as $year)
+                                                <li>
+                                                    <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}"
+                                                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->get('tahun') == $year ? 'bg-gray-200' : '' }}">
+                                                        {{ $year }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                <span class="block px-4 py-2 text-gray-500 text-sm">
+                                                    Belum ada data
+                                                </span>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </li>
 
@@ -256,7 +253,7 @@
 
                                     <!-- Dropdown -->
                                     <ul
-                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-2">
+                                        class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
                                         <li>
                                             <a href="#"
                                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">

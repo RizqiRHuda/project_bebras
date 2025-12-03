@@ -27,6 +27,10 @@ Route::prefix('soal')->name('soal.')->group(function () {
 
 Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
     Route::view('/workshop-2017', 'pages.kegiatan.workshop_2017')->name('workshop-2017');
+    Route::get('/pengumuman-hasil', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman-hasil');
+    Route::get('/pengumuman-hasil/{id}', [App\Http\Controllers\PengumumanController::class, 'show'])->name('pengumuman-hasil.show');
+    Route::get('/pengumuman-hasil/{id}/file', [App\Http\Controllers\PengumumanController::class, 'proxyFile'])->name('pengumuman-hasil.file');
+    Route::get('/pengumuman-hasil/{id}/preview', [App\Http\Controllers\PengumumanController::class, 'preview'])->name('pengumuman-hasil.preview');
 });
 
 Route::get('/latihan', function () {
