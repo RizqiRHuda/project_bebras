@@ -15,7 +15,7 @@
                         alt="Bebras Challenge">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
                         <div class="text-center text-white px-4">
-                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Bebras Challenge 2023</h2>
+                            <h2 class="text-2xl md:text-3xl font-bold mb-2">Bebras Challenge {{ date('Y') }} </h2>
                             <p class="max-w-2xl">Ajang tahunan untuk mengasah kemampuan computational thinking siswa</p>
                         </div>
                     </div>
@@ -144,54 +144,59 @@
         </div>
     </section>
 
-    <section class="py-12 bg-bebrasLightBlue rounded-lg">
+    <section class="py-16 bg-bebrasLightBlue/40 rounded-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12">Kegiatan Bebras Indonesia?</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
-                <div class="bg-white w-80 p-6 rounded-xl shadow-md text-center card-hover">
-                    <div
-                        class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-bebrasLightBlue text-bebrasBlue text-xl mb-4">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Lokakarya Nasional</h3>
-                    <p class="text-gray-600 text-sm">
-                        Berlangsung sekali setahun untuk koordinasi komite nasional (NBO Bebras Indonesia) dengan mitra
-                        (Bebras Biro), dan menetapkan soal-soal nasional.
-                    </p>
-                </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-14">
+                Event Bebras Indonesia
+            </h2>
 
-                <div class="bg-white w-80 p-6 rounded-xl shadow-md text-center card-hover">
-                    <div
-                        class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-bebrasLightBlue text-bebrasBlue text-xl mb-4">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Lokakarya untuk Guru</h3>
-                    <p class="text-gray-600 text-sm">
-                        Workshop/lokakarya dilaksanakan oleh Bebras Biro untuk memberi bekal kepada guru agar para guru
-                        mampu memperkenalkan konsep berpikir komputasi.
-                    </p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
 
-                <div class="bg-white w-80 p-6 rounded-xl shadow-md text-center card-hover">
+                @foreach ($berita as $item)
                     <div
-                        class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-bebrasLightBlue text-bebrasBlue text-xl mb-4">
-                        <i class="fas fa-globe"></i>
+                        class="bg-white w-full max-w-xs p-6 rounded-2xl shadow-sm border border-gray-100 
+                            transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+
+                        @if ($item->gambar)
+                            <div class="h-44 w-full mb-4">
+                                <img src="{{ $item->gambar }}" class="rounded-xl h-full w-full object-cover shadow-sm">
+                            </div>
+                        @endif
+
+                        <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight">
+                            {{ Str::limit($item->title, 55) }}
+                        </h3>
+
+                        <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                            {{ Str::limit(strip_tags($item->konten), 95) }}
+                        </p>
+
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-xs text-gray-400">
+                                {{ date('d M Y', strtotime($item->created_at)) }}
+                            </span>
+
+                            <a href="{{ route('berita.detail', $item->slug) }}"
+                                class="text-bebrasBlue font-semibold text-sm hover:underline">
+                                Baca Selengkapnya →
+                            </a>
+                        </div>
+
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Tantangan Berpikir Komputasional Bebras</h3>
-                    <p class="text-gray-600 text-sm">
-                        Diselenggarakan sesuai jadwal yang ditetapkan komite internasional, biasanya minggu kedua atau
-                        ketiga November (disebut Bebras Week).
-                    </p>
-                </div>
+                @endforeach
+
             </div>
+
+
         </div>
     </section>
+
 
     <div class="flex flex-col md:flex-row items-center p-6 mt-4 rounded-md">
 
         <div class="w-full md:w-4/4 text-center md:text-left md:pl-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Bebras Indonesia Challenge 2024</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Bebras Indonesia Challenge {{ date('Y') }} </h1>
             <p class="mt-2 text-lg text-gray-600">Bebras Indonesia Challenge 2024 akan digelar pada 11-16 November 2024.
                 Daftarkan diri Anda segera.</p>
             <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
