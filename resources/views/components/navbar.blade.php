@@ -221,7 +221,7 @@
                                     <!-- Dropdown -->
                                     <ul
                                         class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
-                                        @if(!empty($pengumumanYears) && count($pengumumanYears) > 0)
+                                        @if(isset($pengumumanYears) && count($pengumumanYears) > 0)
                                             @foreach($pengumumanYears as $year)
                                                 <li>
                                                     <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}"
@@ -232,7 +232,7 @@
                                             @endforeach
                                         @else
                                             <li>
-                                                <span class="block px-4 py-2 text-gray-500 text-sm">
+                                                <span class="block px-4 py-2 text-gray-500 text-sm italic">
                                                     Belum ada data
                                                 </span>
                                             </li>

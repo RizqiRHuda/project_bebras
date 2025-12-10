@@ -21,10 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share pengumuman years to navbar
+        // Share pengumuman years to navbar (from database via service)
         View::composer('components.navbar', function ($view) {
             $pengumumanService = app(BebrasPengumumanService::class);
-            $years = $pengumumanService->getYears();
+            $years = $pengumumanService->getYears(); // Gets data from database directly
             $view->with('pengumumanYears', $years);
         });
     }

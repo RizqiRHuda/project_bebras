@@ -2,39 +2,27 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use App\Models\HasilPengumuman;
+use App\Models\KategoriPengumuman;
+use App\Models\TahunPengumuman;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class BebrasPengumumanService
 {
-    protected $apiUrl;
-
-    public function __construct()
-    {
-        $this->apiUrl = config('services.bebras_admin.api_url');
-    }
-
     /**
-     * Get daftar tahun pengumuman
+     * Get daftar tahun pengumuman dari database
      */
+
     public function getYears()
     {
         return Cache::remember('bebras_years', 3600, function () {
             try {
-                $response = Http::timeout(10)->get("{$this->apiUrl}/pengumuman/tahun");
-                
-                if ($response->successful()) {
-                    return $response->json()['data'] ?? [];
-                }
-                
-                Log::warning('Failed to fetch years from Bebras API', [
-                    'status' => $response->status()
-                ]);
-                
-                return [];
+                return TahunPengumuman::orderBy('tahun', 'desc')
+                    ->pluck('tahun')
+                    ->toArray();
             } catch (\Exception $e) {
-                Log::error('Error fetching years from Bebras API', [
+                Log::error('Error fetching years from database', [
                     'error' => $e->getMessage()
                 ]);
                 return [];
@@ -98,50 +86,44 @@ class BebrasPengumumanService
                     return [];
                 }
                 
-                $url = "{$this->apiUrl}/pengumuman/hasil/{$tahun}";
-                $response = Http::timeout(10)->get($url);
+                $query = HasilPengumuman::with(['kategori', 'tahun']);
                 
-                if ($response->successful()) {
-                    $responseData = $response->json();
-                    $hasilPengumuman = $responseData['data']['hasil_pengumuman'] ?? [];
-                    
-                    // Add tahun to each item since API doesn't include it
-                    $hasilPengumuman = array_map(function($item) use ($tahun) {
-                        $item['tahun'] = $tahun;
-                        return $item;
-                    }, $hasilPengumuman);
-                    
-                    // Filter by kategori if specified
-                    if ($kategoriId) {
-                        $hasilPengumuman = array_filter($hasilPengumuman, function($item) use ($kategoriId) {
-                            $kategori = $item['kategori'] ?? null;
-                            
-                            // Handle string kategori
-                            if (is_string($kategori)) {
-                                return $kategori == $kategoriId;
-                            }
-                            // Handle object/array kategori
-                            elseif (is_array($kategori)) {
-                                return isset($kategori['id']) && $kategori['id'] == $kategoriId;
-                            }
-                            
-                            return false;
-                        });
-                        return array_values($hasilPengumuman);
-                    }
-                    
-                    return $hasilPengumuman;
+                // Filter by tahun
+                if ($tahun) {
+                    $query->whereHas('tahun', function ($q) use ($tahun) {
+                        $q->where('tahun', $tahun);
+                    });
                 }
                 
-                Log::warning('Failed to fetch pengumuman from Bebras API', [
-                    'status' => $response->status(),
-                    'tahun' => $tahun,
-                    'url' => $url ?? null
-                ]);
+                // Filter by kategori
+                if ($kategoriId) {
+                    $query->where('id_kategori', $kategoriId);
+                }
                 
-                return [];
+                $results = $query->orderBy('created_at', 'desc')->get();
+                
+                // Transform to array format untuk compatibility dengan view
+                return $results->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'kategori' => [
+                            'id' => $item->kategori->id,
+                            'nama' => $item->kategori->nama_kategori,
+                            'deskripsi' => $item->kategori->deskripsi,
+                        ],
+                        'tahun' => $item->tahun->tahun,
+                        'description' => $item->description,
+                        'platform' => $item->platform,
+                        'is_uploaded' => $item->is_uploaded,
+                        'can_embed' => $item->can_embed,
+                        'view_url' => $item->view_url,
+                        'download_url' => $item->download_url,
+                        'embed_url' => $item->embed_url,
+                    ];
+                })->toArray();
+                
             } catch (\Exception $e) {
-                Log::error('Error fetching pengumuman from Bebras API', [
+                Log::error('Error fetching pengumuman from database', [
                     'error' => $e->getMessage(),
                     'tahun' => $tahun,
                     'kategori_id' => $kategoriId
@@ -161,47 +143,39 @@ class BebrasPengumumanService
         
         return Cache::remember($cacheKey, 1800, function () use ($id) {
             try {
-                // Try to get from pengumuman list across all years
-                $years = $this->getYears();
+                $item = HasilPengumuman::with(['kategori', 'tahun'])->find($id);
                 
-                foreach ($years as $tahun) {
-                    $response = Http::timeout(10)->get("{$this->apiUrl}/pengumuman/hasil/{$tahun}");
-                    
-                    if ($response->successful()) {
-                        $responseData = $response->json();
-                        $hasilPengumuman = $responseData['data']['hasil_pengumuman'] ?? [];
-                        
-                        foreach ($hasilPengumuman as $item) {
-                            if ($item['id'] == $id) {
-                                // Add tahun to item since API doesn't include it
-                                $item['tahun'] = $tahun;
-                                return $item;
-                            }
-                        }
-                    }
+                if (!$item) {
+                    Log::warning('Pengumuman detail not found', ['id' => $id]);
+                    return null;
                 }
                 
-                Log::warning('Pengumuman detail not found', [
-                    'id' => $id
-                ]);
+                // Transform to array format
+                return [
+                    'id' => $item->id,
+                    'kategori' => [
+                        'id' => $item->kategori->id,
+                        'nama' => $item->kategori->nama_kategori,
+                        'deskripsi' => $item->kategori->deskripsi,
+                    ],
+                    'tahun' => $item->tahun->tahun,
+                    'description' => $item->description,
+                    'platform' => $item->platform,
+                    'is_uploaded' => $item->is_uploaded,
+                    'can_embed' => $item->can_embed,
+                    'view_url' => $item->view_url,
+                    'download_url' => $item->download_url,
+                    'embed_url' => $item->embed_url,
+                ];
                 
-                return null;
             } catch (\Exception $e) {
-                Log::error('Error fetching pengumuman detail from Bebras API', [
+                Log::error('Error fetching pengumuman detail from database', [
                     'error' => $e->getMessage(),
                     'id' => $id
                 ]);
                 return null;
             }
         });
-    }
-
-    /**
-     * Get download URL for pengumuman
-     */
-    public function getDownloadUrl($id)
-    {
-        return "{$this->apiUrl}/pengumuman/download/{$id}";
     }
 
     /**

@@ -64,7 +64,12 @@
                         <!-- Header Card -->
                         <div class="bg-bebrasBlue p-4">
                             <h3 class="text-white font-bold text-lg">
-                                {{ $pengumuman['description'] ?? 'Hasil Pengumuman' }}
+                                @php
+                                    $kategoriDeskripsi = is_string($pengumuman['kategori'] ?? null) 
+                                        ? $pengumuman['kategori'] 
+                                        : ($pengumuman['kategori']['deskripsi'] ?? $pengumuman['kategori']['nama'] ?? 'Hasil Pengumuman');
+                                @endphp
+                                {{ $kategoriDeskripsi }}
                             </h3>
                         </div>
 

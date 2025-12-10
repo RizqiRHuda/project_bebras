@@ -17,7 +17,12 @@
         <!-- Header -->
         <div class="border-b pb-6 mb-8">
             <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
-                {{ $hasil['description'] ?? 'Hasil Pengumuman' }}
+                @php
+                    $kategoriDeskripsi = is_string($hasil['kategori'] ?? null) 
+                        ? $hasil['kategori'] 
+                        : ($hasil['kategori']['deskripsi'] ?? $hasil['kategori']['nama'] ?? 'Hasil Pengumuman');
+                @endphp
+                {{ $kategoriDeskripsi }}
             </h1>
             
             <div class="flex flex-wrap gap-4 items-center text-sm text-gray-600">
@@ -219,8 +224,8 @@
                                 html += '<i class="fas fa-chart-bar text-bebrasBlue mr-2"></i>Statistik Data';
                                 html += '</h3>';
                                 
-                                // First Row: Main KPIs (3 columns)
-                                html += '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">';
+                                // First Row: Main KPIs (2 columns)
+                                html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">';
                                 
                                 // Total Peserta
                                 html += `
@@ -236,23 +241,6 @@
                                         </div>
                                     </div>
                                 `;
-                                
-                                // Average Score
-                                if (avgNilai > 0) {
-                                    html += `
-                                        <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-green-500 hover:shadow-md transition-shadow">
-                                            <div class="flex items-start justify-between">
-                                                <div class="flex-1">
-                                                    <p class="text-xs text-gray-600 font-semibold uppercase tracking-wide mb-2">Rata-rata Nilai</p>
-                                                    <p class="text-3xl font-bold text-gray-800">${avgNilai}</p>
-                                                </div>
-                                                <div class="ml-4">
-                                                    <i class="fas fa-chart-line text-4xl text-green-500 opacity-20"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
-                                }
                                 
                                 // Peserta Above 80
                                 if (pesertaAbove80 >= 0 && colNilai !== -1) {
@@ -275,55 +263,29 @@
                                 
                                 html += '</div>';
                                 
-                                // Second Row: Gender & Rank Distribution (2 columns)
+                                // Second Row: Gender Distribution (full width if no other stats)
                                 const hasGender = Object.keys(genderCount).length > 0;
-                                const hasRank = topRanks.length > 0;
                                 
-                                if (hasGender || hasRank) {
-                                    html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">';
-                                    
-                                    // Gender split
-                                    if (hasGender) {
-                                        const genderEntries = Object.entries(genderCount);
-                                        html += `
+                                if (hasGender) {
+                                    const genderEntries = Object.entries(genderCount);
+                                    html += `
+                                        <div class="mb-4">
                                             <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500 hover:shadow-md transition-shadow">
                                                 <div class="flex items-center justify-between mb-3">
-                                                    <p class="text-xs text-gray-600 font-semibold uppercase tracking-wide">Jenis Kelamin</p>
+                                                    <p class="text-xs text-gray-600 font-semibold uppercase tracking-wide">Gender</p>
                                                     <i class="fas fa-venus-mars text-2xl text-purple-500 opacity-30"></i>
                                                 </div>
-                                                <div class="space-y-2">
+                                                <div class="grid grid-cols-2 md:grid-cols-${genderEntries.length} gap-4">
                                                     ${genderEntries.map(([gender, count]) => `
-                                                        <div class="flex justify-between items-center py-1">
-                                                            <span class="text-sm text-gray-700 font-medium">${gender}:</span>
-                                                            <span class="text-lg font-bold text-gray-800">${count}</span>
+                                                        <div class="text-center p-3 bg-gray-50 rounded-lg">
+                                                            <p class="text-sm text-gray-700 font-medium mb-1">${gender}</p>
+                                                            <p class="text-2xl font-bold text-gray-800">${count}</p>
                                                         </div>
                                                     `).join('')}
                                                 </div>
                                             </div>
-                                        `;
-                                    }
-                                    
-                                    // Top Rank
-                                    if (hasRank) {
-                                        html += `
-                                            <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-yellow-500 hover:shadow-md transition-shadow">
-                                                <div class="flex items-center justify-between mb-3">
-                                                    <p class="text-xs text-gray-600 font-semibold uppercase tracking-wide">Distribusi Rank</p>
-                                                    <i class="fas fa-trophy text-2xl text-yellow-500 opacity-30"></i>
-                                                </div>
-                                                <div class="space-y-2">
-                                                    ${topRanks.slice(0, 3).map(([rank, count]) => `
-                                                        <div class="flex justify-between items-center py-1">
-                                                            <span class="text-sm text-gray-700 font-medium">${rank}:</span>
-                                                            <span class="text-lg font-bold text-gray-800">${count}</span>
-                                                        </div>
-                                                    `).join('')}
-                                                </div>
-                                            </div>
-                                        `;
-                                    }
-                                    
-                                    html += '</div>';
+                                        </div>
+                                    `;
                                 }
                                 
                                 // Third Row: Top Cities and Top Biros (2 columns)

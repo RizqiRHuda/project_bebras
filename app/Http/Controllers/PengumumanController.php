@@ -25,6 +25,13 @@ class PengumumanController extends Controller
         // Get data
         $years = $this->pengumumanService->getYears();
         
+        // Debug logging
+        \Log::info('PengumumanController::index', [
+            'tahun_requested' => $tahun,
+            'kategori_requested' => $kategoriId,
+            'years_available' => $years
+        ]);
+        
         // Set default tahun ke tahun pertama jika tidak ada filter
         if (!$tahun && !empty($years)) {
             $tahun = $years[0];
@@ -33,13 +40,29 @@ class PengumumanController extends Controller
         // Get pengumuman list (without kategori filter, we'll get all for the year)
         $pengumumanListAll = $this->pengumumanService->getPengumuman($tahun, null);
         
+        \Log::info('PengumumanController::pengumumanListAll', [
+            'count' => count($pengumumanListAll),
+            'tahun' => $tahun
+        ]);
+        
         // Extract categories from the pengumuman data
         $categories = $this->pengumumanService->getCategories($pengumumanListAll);
+        
+        \Log::info('PengumumanController::categories', [
+            'count' => count($categories),
+            'categories' => $categories
+        ]);
         
         // Get filtered pengumuman list if kategori is selected
         $pengumumanList = $kategoriId 
             ? $this->pengumumanService->getPengumuman($tahun, $kategoriId)
             : $pengumumanListAll;
+        
+        \Log::info('PengumumanController::finalData', [
+            'years_count' => count($years),
+            'categories_count' => count($categories),
+            'pengumumanList_count' => count($pengumumanList)
+        ]);
         
         return view('pages.kegiatan.pengumuman_hasil', [
             'years' => $years,
@@ -67,29 +90,48 @@ class PengumumanController extends Controller
     }
 
     /**
-     * Proxy file dari API admin untuk menghindari CORS
+     * Proxy file dari API admin (new API endpoint)
      */
     public function proxyFile($id)
     {
         $hasil = $this->pengumumanService->getPengumumanDetail($id);
         
-        if (!$hasil || empty($hasil['view_url'])) {
+        if (!$hasil || !$hasil['is_uploaded']) {
             abort(404, 'File tidak ditemukan');
         }
 
         try {
-            // Fetch file dari API admin
-            $response = \Illuminate\Support\Facades\Http::timeout(30)->get($hasil['view_url']);
+            // Use new API endpoint /api/files/view/{id}
+            $apiUrl = config('services.bebras_admin.api_url', 'http://127.0.0.1:8000/api');
+            $fileApiUrl = $apiUrl . '/files/view/' . $id;
+            
+            $response = \Illuminate\Support\Facades\Http::timeout(30)->get($fileApiUrl);
             
             if (!$response->successful()) {
                 abort(404, 'File tidak dapat diakses');
             }
 
-            // Tentukan content type
-            $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            // Check if response is JSON (API returns JSON with file URL)
+            $jsonResponse = $response->json();
+            if ($jsonResponse && isset($jsonResponse['url'])) {
+                // API returns JSON with file URL, fetch the actual file
+                $fileUrl = $jsonResponse['url'];
+                $fileResponse = \Illuminate\Support\Facades\Http::timeout(30)->get($fileUrl);
+                
+                if (!$fileResponse->successful()) {
+                    abort(404, 'File tidak dapat diakses dari storage');
+                }
+                
+                $fileContent = $fileResponse->body();
+                $contentType = $fileResponse->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            } else {
+                // API returns file directly (binary)
+                $fileContent = $response->body();
+                $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            }
             
             // Return file dengan header CORS
-            return response($response->body(), 200)
+            return response($fileContent, 200)
                 ->header('Content-Type', $contentType)
                 ->header('Access-Control-Allow-Origin', '*')
                 ->header('Cache-Control', 'public, max-age=3600');
@@ -97,7 +139,7 @@ class PengumumanController extends Controller
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Error proxying file', [
                 'id' => $id,
-                'url' => $hasil['view_url'] ?? null,
+                'api_url' => $fileApiUrl ?? null,
                 'error' => $e->getMessage()
             ]);
             
@@ -106,34 +148,57 @@ class PengumumanController extends Controller
     }
 
     /**
-     * Get preview data untuk card di halaman list
+     * Get preview data untuk card di halaman list (new API endpoint)
      */
     public function preview($id)
     {
         $hasil = $this->pengumumanService->getPengumumanDetail($id);
         
-        if (!$hasil || empty($hasil['view_url'])) {
+        if (!$hasil || !$hasil['is_uploaded']) {
             return response()->json(['success' => false, 'message' => 'File tidak ditemukan'], 404);
         }
 
         try {
-            // Fetch file dari API admin
-            $response = \Illuminate\Support\Facades\Http::timeout(30)->get($hasil['view_url']);
+            // Use new API endpoint /api/files/view/{id}
+            $apiUrl = config('services.bebras_admin.api_url', 'http://127.0.0.1:8000/api');
+            $fileApiUrl = $apiUrl . '/files/view/' . $id;
+            
+            $response = \Illuminate\Support\Facades\Http::timeout(30)->get($fileApiUrl);
             
             if (!$response->successful()) {
                 return response()->json(['success' => false, 'message' => 'File tidak dapat diakses'], 404);
             }
 
+            // Check if response is JSON (API returns JSON with file URL)
+            $jsonResponse = $response->json();
+            if ($jsonResponse && isset($jsonResponse['url'])) {
+                // API returns JSON with file URL, fetch the actual file
+                $fileUrl = $jsonResponse['url'];
+                $fileResponse = \Illuminate\Support\Facades\Http::timeout(30)->get($fileUrl);
+                
+                if (!$fileResponse->successful()) {
+                    return response()->json(['success' => false, 'message' => 'File tidak dapat diakses dari storage'], 404);
+                }
+                
+                $fileContent = $fileResponse->body();
+                $contentType = $fileResponse->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            } else {
+                // API returns file directly (binary)
+                $fileContent = $response->body();
+                $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            }
+
             // Return raw file data untuk diproses di frontend
             return response()->json([
                 'success' => true,
-                'data' => base64_encode($response->body()),
-                'contentType' => $response->header('Content-Type')
+                'data' => base64_encode($fileContent),
+                'contentType' => $contentType
             ]);
                 
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Error loading preview', [
                 'id' => $id,
+                'api_url' => $fileApiUrl ?? null,
                 'error' => $e->getMessage()
             ]);
             
