@@ -23,7 +23,7 @@
             <div class="flex items-center text-sm text-gray-500 mb-6">
                 <span>{{ date('d M Y', strtotime($berita->created_at)) }}</span>
                 <span class="mx-2">•</span>
-                <span>{{ $berita->user_name ?? 'Author' }}</span>
+                <span>{{ $berita->nama_biro ?? 'Author' }}</span>
             </div>
 
             {{-- Gambar Utama --}}

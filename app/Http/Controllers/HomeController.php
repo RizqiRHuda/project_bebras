@@ -10,7 +10,8 @@ class HomeController extends Controller
         $berita = DB::table('berita')
             ->where('status', 'published')
             ->orderBy('created_at', 'desc')
-            ->limit(6)
+            ->limit(3)
+            ->orderBy('id', 'desc')
             ->get();
         return view('pages.home', compact('berita'));
     }
@@ -19,7 +20,7 @@ class HomeController extends Controller
     {
         $berita = DB::table('berita')
             ->join('users', 'berita.user_id', '=', 'users.id')
-            ->select('berita.*', 'users.name as user_name')
+            ->select('berita.*', 'users.name as user_name', 'users.nama_biro as nama_biro')
             ->where('berita.slug', $slug)
             ->first();
 

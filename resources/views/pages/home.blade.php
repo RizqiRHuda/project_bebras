@@ -146,7 +146,6 @@
 
     <section class="py-16 bg-bebrasLightBlue/40 rounded-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-14">
                 Event Bebras Indonesia
             </h2>
@@ -155,8 +154,9 @@
 
                 @foreach ($berita as $item)
                     <div
-                        class="bg-white w-full max-w-xs p-6 rounded-2xl shadow-sm border border-gray-100 
-                            transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        class="bg-white w-full max-w-xs p-6 rounded-2xl shadow-sm border border-gray-100
+                           transition-all duration-300 hover:shadow-xl hover:-translate-y-1
+                           flex flex-col min-h-[430px]">
 
                         @if ($item->gambar)
                             <div class="h-44 w-full mb-4">
@@ -164,40 +164,40 @@
                             </div>
                         @endif
 
-                        <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2 leading-tight min-h-[48px]">
                             {{ Str::limit($item->title, 55) }}
                         </h3>
 
-                        <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                        <p class="text-gray-600 text-sm leading-relaxed min-h-[60px]">
                             {{ Str::limit(strip_tags($item->konten), 95) }}
                         </p>
 
-                        <div class="flex items-center justify-between mt-2">
-                            <span class="text-xs text-gray-400">
-                                {{ date('d M Y', strtotime($item->created_at)) }}
-                            </span>
+                        <div class="mt-auto">
 
-                            <a href="{{ route('berita.detail', $item->slug) }}"
-                                class="text-bebrasBlue font-semibold text-sm hover:underline">
-                                Baca Selengkapnya →
-                            </a>
+                            <div class="flex items-center justify-between mt-3">
+                                <span class="text-xs text-gray-400">
+                                    {{ date('d M Y', strtotime($item->created_at)) }}
+                                </span>
+
+                                <a href="{{ route('berita.detail', $item->slug) }}"
+                                    class="text-bebrasBlue font-semibold text-sm hover:underline">
+                                    Baca Selengkapnya →
+                                </a>
+                            </div>
                         </div>
 
                     </div>
                 @endforeach
 
             </div>
-
-
         </div>
     </section>
-
 
     <div class="flex flex-col md:flex-row items-center p-6 mt-4 rounded-md">
 
         <div class="w-full md:w-4/4 text-center md:text-left md:pl-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Bebras Indonesia Challenge {{ date('Y') }} </h1>
-            <p class="mt-2 text-lg text-gray-600">Bebras Indonesia Challenge 2024 akan digelar pada 11-16 November 2024.
+            <p class="mt-2 text-lg text-gray-600">Bebras Indonesia Challenge 2025 akan digelar pada 10-15 November 2025.
                 Daftarkan diri Anda segera.</p>
             <div class="mt-4 flex flex-wrap justify-center md:justify-start gap-3">
                 {{-- <a href="#"
