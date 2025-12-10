@@ -167,14 +167,22 @@
 
                         <ul
                             class="dropdown-menu absolute top-0 left-full ml-1 hidden bg-white shadow-lg rounded-md w-48 z-50">
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                                    2024</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                                    2023</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                                    2022</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                                    2021</a></li>
+                            @if(isset($pengumumanYears) && count($pengumumanYears) > 0)
+                                @foreach($pengumumanYears as $year)
+                                    <li>
+                                        <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}" 
+                                            class="block px-4 py-2 hover:bg-gray-100 {{ request()->get('tahun') == $year ? 'bg-gray-100 font-semibold' : '' }}">
+                                            {{ $year }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li>
+                                    <span class="block px-4 py-2 text-gray-500 text-sm">
+                                        Tidak ada data
+                                    </span>
+                                </li>
+                            @endif
                         </ul>
                     </li>
 

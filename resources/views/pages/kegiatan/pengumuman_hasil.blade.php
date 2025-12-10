@@ -3,19 +3,19 @@
 @section('title', 'Pengumuman Hasil Challenge')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 py-10">
-    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+<div class="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-10">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-10">
 
         <!-- Header -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b pb-6 mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-4 md:mb-0">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b pb-4 sm:pb-6 mb-6 sm:mb-8">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-0">
                 Pengumuman Hasil Challenge
             </h1>
         </div>
 
         <!-- Filter Section -->
-        <div class="mb-8 bg-gray-50 p-6 rounded-xl">
-            <form action="{{ route('kegiatan.pengumuman-hasil') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="mb-6 sm:mb-8 bg-gray-50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+            <form action="{{ route('kegiatan.pengumuman-hasil') }}" method="GET" class="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-4">
                 
                 <!-- Filter Tahun -->
                 <div>
@@ -57,13 +57,13 @@
 
         <!-- Results Section -->
         @if(count($pengumumanList) > 0)
-            <div class="space-y-6">
+            <div class="space-y-4 sm:space-y-6">
                 @foreach($pengumumanList as $pengumuman)
-                    <div class="group bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-200">
+                    <div class="group bg-gradient-to-br from-white to-gray-50 rounded-lg sm:rounded-xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden border border-gray-200">
                         
                         <!-- Header Card -->
-                        <div class="bg-bebrasBlue p-4">
-                            <h3 class="text-white font-bold text-lg">
+                        <div class="bg-bebrasBlue p-3 sm:p-4">
+                            <h3 class="text-white font-bold text-base sm:text-lg">
                                 @php
                                     $kategoriDeskripsi = is_string($pengumuman['kategori'] ?? null) 
                                         ? $pengumuman['kategori'] 
@@ -74,9 +74,9 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="p-5">
+                        <div class="p-3 sm:p-5">
                             <!-- Info -->
-                            <div class="mb-4 space-y-2">
+                            <div class="mb-3 sm:mb-4 space-y-2">
                                 <div class="flex items-center text-gray-700">
                                     <i class="fas fa-calendar-alt text-bebrasBlue mr-2"></i>
                                     <span class="text-sm font-medium">Tahun: {{ $pengumuman['tahun'] }}</span>
@@ -111,9 +111,9 @@
 
                             <!-- Preview Section (hanya untuk uploaded files) -->
                             @if($pengumuman['is_uploaded'])
-                                <div class="mb-4 bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <div class="mb-3 sm:mb-4 bg-gray-50 rounded-lg p-2 sm:p-3 border border-gray-200">
                                     <div class="mb-2">
-                                        <h4 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                                        <h4 class="text-xs sm:text-sm font-semibold text-gray-700 uppercase tracking-wide">
                                             <i class="fas fa-eye text-bebrasBlue mr-1"></i>Preview Data
                                         </h4>
                                     </div>
@@ -135,8 +135,8 @@
 
                             <!-- Action Button -->
                             <a href="{{ route('kegiatan.pengumuman-hasil.show', $pengumuman['id']) }}" 
-                                class="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-4 rounded-lg transition duration-200 transform group-hover:scale-95 shadow-md">
-                                <i class="fas fa-eye mr-2"></i>Lihat Selengkapnya
+                                class="block w-full text-center bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 sm:py-3 px-3 sm:px-4 rounded-lg transition duration-200 transform group-hover:scale-95 shadow-md text-sm sm:text-base">
+                                <i class="fas fa-eye mr-1 sm:mr-2"></i>Lihat Selengkapnya
                             </a>
                         </div>
                     </div>

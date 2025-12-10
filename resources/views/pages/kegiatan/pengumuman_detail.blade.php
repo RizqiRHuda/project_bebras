@@ -3,20 +3,20 @@
 @section('title', 'Detail Hasil Pengumuman')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 py-10">
-    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+<div class="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-10">
+    <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-10">
 
         <!-- Back Button -->
-        <div class="mb-6">
+        <div class="mb-4 sm:mb-6">
             <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $hasil['tahun']]) }}" 
-                class="inline-flex items-center text-bebrasBlue hover:text-bebrasDarkBlue font-semibold transition">
+                class="inline-flex items-center text-bebrasBlue hover:text-bebrasDarkBlue font-semibold transition text-sm sm:text-base">
                 <i class="fas fa-arrow-left mr-2"></i> Kembali ke Daftar
             </a>
         </div>
 
         <!-- Header -->
-        <div class="border-b pb-6 mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+        <div class="border-b pb-4 sm:pb-6 mb-6 sm:mb-8">
+            <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight mb-3 sm:mb-4">
                 @php
                     $kategoriDeskripsi = is_string($hasil['kategori'] ?? null) 
                         ? $hasil['kategori'] 
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Platform Info & Download Button -->
-        <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="mb-4 sm:mb-6 bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-3 sm:gap-4">
             <div class="flex items-center text-blue-800">
                 @if($hasil['is_uploaded'])
                     <i class="fas fa-file-excel text-2xl mr-3"></i>
@@ -68,7 +68,7 @@
             <!-- Download/View Button -->
             @if($hasil['is_uploaded'] && isset($hasil['download_url']))
                 <a href="{{ $hasil['download_url'] }}" 
-                    class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-md"
+                    class="inline-flex items-center justify-center w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-200 transform hover:scale-105 shadow-md text-sm sm:text-base"
                     download>
                     <i class="fas fa-download mr-2"></i>Download File
                 </a>
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Embed/View Section -->
-        <div class="bg-gray-50 rounded-xl p-6 min-h-[600px]">
+        <div class="bg-gray-50 rounded-lg sm:rounded-xl p-3 sm:p-6 min-h-[400px] sm:min-h-[600px]">
             @if(!empty($hasil['can_embed']) && $hasil['can_embed'])
                 <!-- Can Embed: Google Sheets or Uploaded File -->
                 @if($hasil['is_uploaded'])
