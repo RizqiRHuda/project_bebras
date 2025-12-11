@@ -124,10 +124,12 @@
 
                         <ul
                             class="dropdown-menu absolute top-0 left-full ml-1 hidden bg-white shadow-lg rounded-md w-48 z-50">
-                            <li><a href="{{ route('kegiatan.workshop-2017') }}" class="block px-4 py-2 hover:bg-gray-100">
-                                    2017</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                                    2016</a></li>
+                            @foreach ($workshopYears as $t)
+                                <li><a href="{{ route('kegiatan.workshop.tahun', $t->slug) }}"
+                                        class="block px-4 py-2 hover:bg-gray-100">
+                                        {{ $t->tahun }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </li>
 
@@ -167,10 +169,10 @@
 
                         <ul
                             class="dropdown-menu absolute top-0 left-full ml-1 hidden bg-white shadow-lg rounded-md w-48 z-50">
-                            @if(isset($pengumumanYears) && count($pengumumanYears) > 0)
-                                @foreach($pengumumanYears as $year)
+                            @if (isset($pengumumanYears) && count($pengumumanYears) > 0)
+                                @foreach ($pengumumanYears as $year)
                                     <li>
-                                        <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}" 
+                                        <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}"
                                             class="block px-4 py-2 hover:bg-gray-100 {{ request()->get('tahun') == $year ? 'bg-gray-100 font-semibold' : '' }}">
                                             {{ $year }}
                                         </a>
@@ -209,7 +211,8 @@
                                     2021</a></li>
                         </ul>
                     </li>
-                    <li><a href="https://pandai.bebras.or.id/" target="_blank" class="block px-4 py-2 hover:bg-gray-100">Gerakan Pandai</a>
+                    <li><a href="https://pandai.bebras.or.id/" target="_blank"
+                            class="block px-4 py-2 hover:bg-gray-100">Gerakan Pandai</a>
                     </li>
                 </ul>
             </div>

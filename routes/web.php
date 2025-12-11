@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WorkshopController;
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
@@ -26,7 +27,10 @@ Route::prefix('soal')->name('soal.')->group(function () {
 });
 
 Route::prefix('kegiatan')->name('kegiatan.')->group(function () {
-    Route::view('/workshop-2017', 'pages.kegiatan.workshop_2017')->name('workshop-2017');
+
+    // Route::get('/{slug}', [WorkshopController::class, 'byTahun'])->name('workshop.tahun');
+    Route::get('workshop-{slug}', [WorkshopController::class, 'byTahun'])->name('workshop.tahun');
+
     Route::get('/pengumuman-hasil', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman-hasil');
     Route::get('/pengumuman-hasil/{id}', [App\Http\Controllers\PengumumanController::class, 'show'])->name('pengumuman-hasil.show');
     Route::get('/pengumuman-hasil/{id}/file', [App\Http\Controllers\PengumumanController::class, 'proxyFile'])->name('pengumuman-hasil.file');
@@ -44,3 +48,5 @@ Route::get('/kontak', function () {
 Route::prefix('berita')->name('berita.')->group(function () {
     Route::get('/{slug}', [HomeController::class, 'tampilBerita'])->name('detail');
 });
+
+

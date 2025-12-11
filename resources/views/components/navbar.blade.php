@@ -149,18 +149,15 @@
                                     <!-- Dropdown -->
                                     <ul
                                         class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
-                                        <li>
-                                            <a href="{{ route('kegiatan.workshop-2017') }}"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('kegiatan.workshop-2017') ? 'active' : '' }}">
-                                                2017
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('#') ? 'active' : '' }}">
-                                                2016
-                                            </a>
-                                        </li>
+
+                                        @foreach ($workshopYears as $t)
+                                            <li>
+                                                <a href="{{ route('kegiatan.workshop.tahun', $t->slug) }}"
+                                                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100  {{ request()->is('kegiatan/' . $t->slug) ? 'active' : '' }}">
+                                                    {{ $t->tahun }}
+                                                </a>
+                                            </li>
+                                        @endforeach
 
                                     </ul>
                                 </li>
@@ -221,8 +218,8 @@
                                     <!-- Dropdown -->
                                     <ul
                                         class="absolute left-full top-0 hidden group-hover:block bg-white shadow-lg rounded-md w-40 ms-0">
-                                        @if(isset($pengumumanYears) && count($pengumumanYears) > 0)
-                                            @foreach($pengumumanYears as $year)
+                                        @if (isset($pengumumanYears) && count($pengumumanYears) > 0)
+                                            @foreach ($pengumumanYears as $year)
                                                 <li>
                                                     <a href="{{ route('kegiatan.pengumuman-hasil', ['tahun' => $year]) }}"
                                                         class="block px-4 py-2 text-gray-700 hover:bg-gray-100 {{ request()->get('tahun') == $year ? 'bg-gray-200' : '' }}">

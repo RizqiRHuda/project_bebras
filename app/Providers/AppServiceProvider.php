@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use App\Services\BebrasPengumumanService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,11 +21,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share pengumuman years to navbar (from database via service)
+        // Share pengumuman years to navbar
         View::composer('components.navbar', function ($view) {
             $pengumumanService = app(BebrasPengumumanService::class);
-            $years = $pengumumanService->getYears(); // Gets data from database directly
+            $years             = $pengumumanService->getYears();
             $view->with('pengumumanYears', $years);
+        });
+
+        View::composer('components.navbar', function ($view) {
+            $workshopYears = DB::table('tahun_workshop')
+                ->orderBy('tahun', 'asc')
+                ->get();
+
+            $view->with('workshopYears', $workshopYears);
         });
     }
 }
