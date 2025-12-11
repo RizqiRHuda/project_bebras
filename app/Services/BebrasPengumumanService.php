@@ -16,18 +16,16 @@ class BebrasPengumumanService
 
     public function getYears()
     {
-        return Cache::remember('bebras_years', 3600, function () {
-            try {
-                return TahunPengumuman::orderBy('tahun', 'desc')
-                    ->pluck('tahun')
-                    ->toArray();
-            } catch (\Exception $e) {
-                Log::error('Error fetching years from database', [
-                    'error' => $e->getMessage()
-                ]);
-                return [];
-            }
-        });
+        try {
+            return TahunPengumuman::orderBy('tahun', 'desc')
+                ->pluck('tahun')
+                ->toArray();
+        } catch (\Exception $e) {
+            Log::error('Error fetching years from database', [
+                'error' => $e->getMessage()
+            ]);
+            return [];
+        }
     }
 
     /**
@@ -77,80 +75,30 @@ class BebrasPengumumanService
      */
     public function getPengumuman($tahun = null, $kategoriId = null)
     {
-        $cacheKey = "bebras_pengumuman_{$tahun}_{$kategoriId}";
-        
-        return Cache::remember($cacheKey, 1800, function () use ($tahun, $kategoriId) {
-            try {
-                // Use /pengumuman/hasil/{tahun} endpoint
-                if (!$tahun) {
-                    return [];
-                }
-                
-                $query = HasilPengumuman::with(['kategori', 'tahun']);
-                
-                // Filter by tahun
-                if ($tahun) {
-                    $query->whereHas('tahun', function ($q) use ($tahun) {
-                        $q->where('tahun', $tahun);
-                    });
-                }
-                
-                // Filter by kategori
-                if ($kategoriId) {
-                    $query->where('id_kategori', $kategoriId);
-                }
-                
-                $results = $query->orderBy('created_at', 'desc')->get();
-                
-                // Transform to array format untuk compatibility dengan view
-                return $results->map(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'kategori' => [
-                            'id' => $item->kategori->id,
-                            'nama' => $item->kategori->nama_kategori,
-                            'deskripsi' => $item->kategori->deskripsi,
-                        ],
-                        'tahun' => $item->tahun->tahun,
-                        'description' => $item->description,
-                        'platform' => $item->platform,
-                        'is_uploaded' => $item->is_uploaded,
-                        'can_embed' => $item->can_embed,
-                        'view_url' => $item->view_url,
-                        'download_url' => $item->download_url,
-                        'embed_url' => $item->embed_url,
-                    ];
-                })->toArray();
-                
-            } catch (\Exception $e) {
-                Log::error('Error fetching pengumuman from database', [
-                    'error' => $e->getMessage(),
-                    'tahun' => $tahun,
-                    'kategori_id' => $kategoriId
-                ]);
+        try {
+            // Use /pengumuman/hasil/{tahun} endpoint
+            if (!$tahun) {
                 return [];
             }
-        });
-    }
-
-    /**
-     * Get detail pengumuman by ID
-     * Note: Based on /pengumuman/hasil/{tahun} response structure
-     */
-    public function getPengumumanDetail($id)
-    {
-        $cacheKey = "bebras_pengumuman_detail_{$id}";
-        
-        return Cache::remember($cacheKey, 1800, function () use ($id) {
-            try {
-                $item = HasilPengumuman::with(['kategori', 'tahun'])->find($id);
-                
-                if (!$item) {
-                    Log::warning('Pengumuman detail not found', ['id' => $id]);
-                    return null;
-                }
-                
-                // Transform to array format
+            
+            $query = HasilPengumuman::with(['kategori', 'tahun']);
+            
+            // Filter by tahun
+            if ($tahun) {
+                $query->whereHas('tahun', function ($q) use ($tahun) {
+                    $q->where('tahun', $tahun);
+                });
+            }
+            
+            // Filter by kategori
+            if ($kategoriId) {
+                $query->where('id_kategori', $kategoriId);
+            }
+            
+            $results = $query->orderBy('created_at', 'desc')->get();
+            
+            // Transform to array format untuk compatibility dengan view
+            return $results->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'kategori' => [
@@ -167,28 +115,57 @@ class BebrasPengumumanService
                     'download_url' => $item->download_url,
                     'embed_url' => $item->embed_url,
                 ];
-                
-            } catch (\Exception $e) {
-                Log::error('Error fetching pengumuman detail from database', [
-                    'error' => $e->getMessage(),
-                    'id' => $id
-                ]);
-                return null;
-            }
-        });
+            })->toArray();
+            
+        } catch (\Exception $e) {
+            Log::error('Error fetching pengumuman from database', [
+                'error' => $e->getMessage(),
+                'tahun' => $tahun,
+                'kategori_id' => $kategoriId
+            ]);
+            return [];
+        }
     }
 
     /**
-     * Clear all cache
+     * Get detail pengumuman by ID
+     * Note: Based on /pengumuman/hasil/{tahun} response structure
      */
-    public function clearCache()
+    public function getPengumumanDetail($id)
     {
-        Cache::forget('bebras_years');
-        Cache::forget('bebras_categories');
-        
-        // Clear pengumuman cache (might need more sophisticated approach in production)
-        foreach (range(2020, now()->year) as $year) {
-            Cache::forget("bebras_pengumuman_{$year}_");
+        try {
+            $item = HasilPengumuman::with(['kategori', 'tahun'])->find($id);
+            
+            if (!$item) {
+                Log::warning('Pengumuman detail not found', ['id' => $id]);
+                return null;
+            }
+            
+            // Transform to array format
+            return [
+                'id' => $item->id,
+                'kategori' => [
+                    'id' => $item->kategori->id,
+                    'nama' => $item->kategori->nama_kategori,
+                    'deskripsi' => $item->kategori->deskripsi,
+                ],
+                'tahun' => $item->tahun->tahun,
+                'description' => $item->description,
+                'platform' => $item->platform,
+                'is_uploaded' => $item->is_uploaded,
+                'can_embed' => $item->can_embed,
+                'view_url' => $item->view_url,
+                'download_url' => $item->download_url,
+                'embed_url' => $item->embed_url,
+            ];
+            
+        } catch (\Exception $e) {
+            Log::error('Error fetching pengumuman detail from database', [
+                'error' => $e->getMessage(),
+                'id' => $id
+            ]);
+            return null;
         }
     }
+
 }

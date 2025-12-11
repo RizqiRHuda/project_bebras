@@ -510,19 +510,24 @@
                     </script>
                     @endpush
 
-                @else
-                    <!-- Google Sheets Embed -->
-                    <!-- Search Guide for Google Sheets -->
+                @elseif(in_array($hasil['platform'], ['google_sheets', 'excel_online']))
+                    <!-- Google Sheets / Excel Online Embed -->
+                    <!-- Search Guide -->
                     <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex items-start flex-1">
                                 <i class="fas fa-info-circle text-blue-500 text-xl mr-3 mt-1"></i>
                                 <div>
-                                    <h4 class="font-semibold text-blue-900 mb-2">💡 Tips Mencari Data di Google Sheets</h4>
+                                    <h4 class="font-semibold text-blue-900 mb-2">💡 Tips Mencari Data di {{ $hasil['platform'] === 'google_sheets' ? 'Google Sheets' : 'Excel Online' }}</h4>
                                     <ul class="text-sm text-blue-800 space-y-1">
                                         <li><kbd class="px-2 py-1 bg-white border border-blue-300 rounded text-xs font-mono">Ctrl + F</kbd> untuk mencari teks</li>
-                                        <li>Klik kolom header lalu pilih <strong>Data → Create a filter</strong> untuk filter data</li>
-                                        <li>Gunakan menu <strong>Data → Sort range</strong> untuk mengurutkan data</li>
+                                        @if($hasil['platform'] === 'google_sheets')
+                                            <li>Klik kolom header lalu pilih <strong>Data → Create a filter</strong> untuk filter data</li>
+                                            <li>Gunakan menu <strong>Data → Sort range</strong> untuk mengurutkan data</li>
+                                        @else
+                                            <li>Gunakan fitur filter dan sort yang tersedia di toolbar</li>
+                                            <li>Klik header kolom untuk sorting</li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -531,8 +536,13 @@
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 transform hover:scale-105 shadow-md whitespace-nowrap">
-                                    <i class="fab fa-google text-lg mr-2"></i>
-                                    <span>Buka di Google Sheets</span>
+                                    @if($hasil['platform'] === 'google_sheets')
+                                        <i class="fab fa-google text-lg mr-2"></i>
+                                        <span>Buka di Google Sheets</span>
+                                    @else
+                                        <i class="fab fa-microsoft text-lg mr-2"></i>
+                                        <span>Buka di Excel Online</span>
+                                    @endif
                                     <i class="fas fa-external-link-alt text-xs ml-2"></i>
                                 </a>
                             </div>
@@ -550,46 +560,42 @@
                 @endif
 
             @else
-                <!-- Cannot Embed: OneDrive / Excel Online -->
-                <!-- Search Guide for External Platform -->
-                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6 rounded">
+                <!-- Cannot Embed: OneDrive -->
+                <!-- Search Guide for OneDrive -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
                     <div class="flex items-start">
-                        <i class="fas fa-lightbulb text-yellow-600 text-xl mr-3 mt-1"></i>
+                        <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-1"></i>
                         <div>
-                            <h4 class="font-semibold text-yellow-900 mb-2">💡 Tips Mencari Data di {{ ucfirst($hasil['platform'] ?? 'Platform Eksternal') }}</h4>
-                            <ul class="text-sm text-yellow-800 space-y-1">
-                                @if(str_contains($hasil['platform'] ?? '', 'onedrive'))
-                                    <li><kbd class="px-2 py-1 bg-white border border-yellow-300 rounded text-xs font-mono">Ctrl + F</kbd> untuk mencari teks dalam file Excel</li>
-                                    <li>Gunakan fitur <strong>Filter</strong> di toolbar Excel Online</li>
-                                    <li>Klik <strong>Data → Filter</strong> untuk mengaktifkan dropdown filter di setiap kolom</li>
-                                    <li>Gunakan <strong>Sort A-Z</strong> atau <strong>Sort Z-A</strong> untuk mengurutkan data</li>
-                                @else
-                                    <li>Buka file di platform eksternal</li>
-                                    <li>Gunakan fitur pencarian bawaan platform (biasanya <kbd class="px-2 py-1 bg-white border border-yellow-300 rounded text-xs font-mono">Ctrl + F</kbd>)</li>
-                                    <li>Manfaatkan fitur filter dan sort yang tersedia</li>
-                                @endif
+                            <h4 class="font-semibold text-blue-900 mb-2">💡 Tips Mencari Data di OneDrive</h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><kbd class="px-2 py-1 bg-white border border-blue-300 rounded text-xs font-mono">Ctrl + F</kbd> untuk mencari teks dalam file Excel</li>
+                                <li>Gunakan fitur <strong>Filter</strong> di toolbar Excel Online</li>
+                                <li>Klik <strong>Data → Filter</strong> untuk mengaktifkan dropdown filter di setiap kolom</li>
+                                <li>Gunakan <strong>Sort A-Z</strong> atau <strong>Sort Z-A</strong> untuk mengurutkan data</li>
+                                <li>Gunakan <strong>Find & Select</strong> untuk pencarian lanjutan</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 
                 <div class="text-center py-16">
-                    <div class="inline-block p-8 bg-white rounded-full mb-6 shadow-md">
+                    <div class="inline-block p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full mb-6 shadow-lg">
                         <i class="fab fa-microsoft text-blue-600 text-6xl"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">
-                        Lihat di {{ ucfirst($hasil['platform'] ?? 'Platform Eksternal') }}
+                        Lihat di OneDrive
                     </h3>
                     <p class="text-gray-600 mb-8 max-w-md mx-auto">
-                        File ini tidak dapat ditampilkan langsung di website karena kebijakan platform eksternal. 
-                        Klik tombol di bawah untuk membuka file di tab baru.
+                        File ini tersimpan di OneDrive dan tidak dapat ditampilkan langsung di website. 
+                        Klik tombol di bawah untuk membuka file di Excel Online.
                     </p>
                     <a href="{{ $hasil['view_url'] }}" 
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-external-link-alt mr-3"></i>
-                        Buka di {{ ucfirst($hasil['platform'] ?? 'Platform Eksternal') }}
+                        <i class="fab fa-microsoft mr-3 text-xl"></i>
+                        Buka di OneDrive
+                        <i class="fas fa-external-link-alt ml-3 text-sm"></i>
                     </a>
                 </div>
             @endif

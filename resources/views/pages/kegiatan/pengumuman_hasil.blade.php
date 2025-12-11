@@ -101,8 +101,23 @@
                                         <i class="fas fa-file-excel mr-2"></i>
                                         <span class="text-xs font-medium">File Excel Tersedia</span>
                                     </div>
-                                @else
+                                @elseif($pengumuman['platform'] === 'google_sheets')
+                                    <div class="flex items-center text-green-600">
+                                        <i class="fab fa-google mr-2"></i>
+                                        <span class="text-xs font-medium">Google Sheets</span>
+                                    </div>
+                                @elseif($pengumuman['platform'] === 'excel_online')
                                     <div class="flex items-center text-blue-600">
+                                        <i class="fab fa-microsoft mr-2"></i>
+                                        <span class="text-xs font-medium">Excel Online</span>
+                                    </div>
+                                @elseif($pengumuman['platform'] === 'onedrive')
+                                    <div class="flex items-center text-blue-600">
+                                        <i class="fab fa-microsoft mr-2"></i>
+                                        <span class="text-xs font-medium">OneDrive</span>
+                                    </div>
+                                @else
+                                    <div class="flex items-center text-gray-600">
                                         <i class="fas fa-link mr-2"></i>
                                         <span class="text-xs font-medium">Link Eksternal</span>
                                     </div>
@@ -124,9 +139,28 @@
                                         </div>
                                     </div>
                                 </div>
-                            @else
+                            @elseif(in_array($pengumuman['platform'], ['google_sheets', 'excel_online']))
+                                <div class="mb-4 bg-green-50 rounded-lg p-3 border border-green-200">
+                                    <div class="flex items-center text-green-700 text-xs">
+                                        @if($pengumuman['platform'] === 'google_sheets')
+                                            <i class="fab fa-google mr-2"></i>
+                                            <span>File dapat dilihat di Google Sheets</span>
+                                        @else
+                                            <i class="fab fa-microsoft mr-2"></i>
+                                            <span>File dapat dilihat di Excel Online</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @elseif($pengumuman['platform'] === 'onedrive')
                                 <div class="mb-4 bg-blue-50 rounded-lg p-3 border border-blue-200">
                                     <div class="flex items-center text-blue-700 text-xs">
+                                        <i class="fab fa-microsoft mr-2"></i>
+                                        <span>File tersimpan di OneDrive</span>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="mb-4 bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                    <div class="flex items-center text-gray-700 text-xs">
                                         <i class="fas fa-info-circle mr-2"></i>
                                         <span>Preview hanya tersedia untuk file Excel yang diupload</span>
                                     </div>

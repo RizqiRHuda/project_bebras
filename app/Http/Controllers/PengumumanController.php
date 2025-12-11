@@ -91,12 +91,27 @@ class PengumumanController extends Controller
 
     /**
      * Proxy file dari API admin (new API endpoint)
+     * Hanya untuk file uploaded, platform eksternal langsung redirect
      */
     public function proxyFile($id)
     {
         $hasil = $this->pengumumanService->getPengumumanDetail($id);
         
-        if (!$hasil || !$hasil['is_uploaded']) {
+        if (!$hasil) {
+            abort(404, 'File tidak ditemukan');
+        }
+        
+        // Untuk platform eksternal (Google Sheets, OneDrive, Excel Online)
+        // Redirect langsung ke URL eksternal
+        if (in_array($hasil['platform'], ['google_sheets', 'onedrive', 'excel_online'])) {
+            if (!empty($hasil['view_url'])) {
+                return redirect($hasil['view_url']);
+            }
+            abort(404, 'URL tidak tersedia');
+        }
+        
+        // Untuk file uploaded, proxy dari API
+        if (!$hasil['is_uploaded']) {
             abort(404, 'File tidak ditemukan');
         }
 
@@ -111,24 +126,9 @@ class PengumumanController extends Controller
                 abort(404, 'File tidak dapat diakses');
             }
 
-            // Check if response is JSON (API returns JSON with file URL)
-            $jsonResponse = $response->json();
-            if ($jsonResponse && isset($jsonResponse['url'])) {
-                // API returns JSON with file URL, fetch the actual file
-                $fileUrl = $jsonResponse['url'];
-                $fileResponse = \Illuminate\Support\Facades\Http::timeout(30)->get($fileUrl);
-                
-                if (!$fileResponse->successful()) {
-                    abort(404, 'File tidak dapat diakses dari storage');
-                }
-                
-                $fileContent = $fileResponse->body();
-                $contentType = $fileResponse->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            } else {
-                // API returns file directly (binary)
-                $fileContent = $response->body();
-                $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            }
+            // Untuk file uploaded, API akan return binary file langsung
+            $fileContent = $response->body();
+            $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             
             // Return file dengan header CORS
             return response($fileContent, 200)
@@ -149,12 +149,23 @@ class PengumumanController extends Controller
 
     /**
      * Get preview data untuk card di halaman list (new API endpoint)
+     * Hanya untuk file uploaded, platform eksternal tidak perlu preview
      */
     public function preview($id)
     {
         $hasil = $this->pengumumanService->getPengumumanDetail($id);
         
-        if (!$hasil || !$hasil['is_uploaded']) {
+        if (!$hasil) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
+        }
+        
+        // Platform eksternal tidak perlu preview (tidak bisa di-parse di frontend)
+        if (in_array($hasil['platform'], ['google_sheets', 'onedrive', 'excel_online'])) {
+            return response()->json(['success' => false, 'message' => 'Preview tidak tersedia untuk platform eksternal'], 400);
+        }
+        
+        // Hanya untuk file uploaded
+        if (!$hasil['is_uploaded']) {
             return response()->json(['success' => false, 'message' => 'File tidak ditemukan'], 404);
         }
 
@@ -169,25 +180,10 @@ class PengumumanController extends Controller
                 return response()->json(['success' => false, 'message' => 'File tidak dapat diakses'], 404);
             }
 
-            // Check if response is JSON (API returns JSON with file URL)
-            $jsonResponse = $response->json();
-            if ($jsonResponse && isset($jsonResponse['url'])) {
-                // API returns JSON with file URL, fetch the actual file
-                $fileUrl = $jsonResponse['url'];
-                $fileResponse = \Illuminate\Support\Facades\Http::timeout(30)->get($fileUrl);
-                
-                if (!$fileResponse->successful()) {
-                    return response()->json(['success' => false, 'message' => 'File tidak dapat diakses dari storage'], 404);
-                }
-                
-                $fileContent = $fileResponse->body();
-                $contentType = $fileResponse->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            } else {
-                // API returns file directly (binary)
-                $fileContent = $response->body();
-                $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            }
-
+            // API akan return binary file langsung untuk uploaded files
+            $fileContent = $response->body();
+            $contentType = $response->header('Content-Type') ?? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            
             // Return raw file data untuk diproses di frontend
             return response()->json([
                 'success' => true,
