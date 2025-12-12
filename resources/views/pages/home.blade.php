@@ -205,7 +205,7 @@
                     <span>Daftar Sekarang</span>
                     <i class="fas fa-arrow-right ml-2 text-xs"></i>
                 </a> --}}
-                <a href="#"
+                <a href="{{ route('info-lengkap') }}"
                     class="border border-bebrasBlue text-bebrasBlue px-5 py-2 rounded-full text-sm font-semibold inline-flex items-center hover:text-[#F97A00] hover:border-[#F97A00] active:scale-95 active:text-[#F97A00] active:border-[#F97A00]"">
                     <span>Info Lengkap</span>
                     <i class="fas fa-info-circle ml-2 text-xs"></i>

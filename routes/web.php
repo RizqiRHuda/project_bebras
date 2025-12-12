@@ -49,4 +49,4 @@ Route::prefix('berita')->name('berita.')->group(function () {
     Route::get('/{slug}', [HomeController::class, 'tampilBerita'])->name('detail');
 });
 
-
+Route::get('/info-lengkap', [HomeController::class, 'infoLengkap'])->name('info-lengkap');

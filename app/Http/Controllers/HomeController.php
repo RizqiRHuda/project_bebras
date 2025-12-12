@@ -40,4 +40,9 @@ class HomeController extends Controller
         return view('pages.berita.detail_berita', compact('berita', 'prev', 'next'));
     }
 
+    public function infoLengkap()
+    {
+        return view('pages.berita.info_lengkap');
+    }
+
 }
